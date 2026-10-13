@@ -1,0 +1,31 @@
+#inp_num {
+  position: fixed;
+  inset: 16px 16px auto 16px;
+  z-index: 100;
+  display: block;
+  height: 16px;
+  cursor: pointer;
+}
+
+.text {
+  position: fixed;
+  inset: auto 16px 16px 16px;
+  z-index: 100;
+  text-align: center;
+  font-family: "Courier New";
+  font-weight: bold;
+  word-wrap: break-word;
+}
+
+#txt_num {
+  font-size: 32px;
+}
+
+#txt_name {
+  font-size: 14px;
+  display: block;
+}
+
+#txt_name::first-letter {
+  text-transform: uppercase;
+}
