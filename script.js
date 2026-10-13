@@ -107,11 +107,11 @@ function updateNum(num) {
         )
         .toString()
         .replace(
-                /(\.[0-9]+)?e\+([0-9]*)/,
-                (_, m1, m2) => (m1 ? m1.substr(1) : '') +
-                        Array(parseInt(m2) - (m1 ? (m1.length - 1) : 0))
-                        .fill(0)
-                        .join('')
+            /(\.[0-9]+)?e\+([0-9]*)/,
+            (_, m1, m2) => (m1 ? m1.substr(1) : '') +
+                Array(parseInt(m2) - (m1 ? (m1.length - 1) : 0))
+                .fill(0)
+                .join('')
         )
         .replace('.', '');
     num = num
