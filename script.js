@@ -1,24 +1,31 @@
 const
     CN = document.createElement('canvas'),
+    CW = window.innerWidth,
+    CH = window.innerHeight * 0.7,
+    CS = CW < 500 ? 8 : CW < 800 ? 10 : 12,
+    CQ = 2,
+    INP = document.getElementById('inp_num'),
     C    = CN.getContext('2d');
-CN.width = window.innerWidth * 2;
-CN.height = window.innerHeight * 2;
-CN.style.width = window.innerWidth;
-CN.style.height = window.innerHeight;
+
+CN.width = CW * CQ;
+CN.height = CH * CQ;
+CN.style.width = CW + 'px';
+CN.style.height = CH + 'px';
 CN.style.position = 'fixed';
-CN.style.inset = 0;
+CN.style.inset = '0 0 auto 0';
 document.body.appendChild(CN);
-C.scale(0.5, 0.5);
-C.translate(CN.width * 0.5, CN.height * 0.5);
+
+C.scale(CQ, CQ);
+C.translate(CW * 0.5, CH * 0.5);
 C.fillStyle = '#fff';
 C.strokeStyle = '#000';
-C.scale(16, 16);
-C.lineWidth = 0.125;
+C.scale(CS, CS);
+C.lineWidth = 2 / CS;
 
 function drawFrame(step = 1000, showPrev) {
     C.clearRect(
-        -CN.width, -CN.height,
-        CN.width * 2, CN.height * 2
+        CW * -0.5, CH * -0.5,
+        CW, CH
     );
     
     if (step < 1 && showPrev) {
@@ -32,7 +39,7 @@ function drawFrame(step = 1000, showPrev) {
             f = 1 - Math.pow(1 - f, 3);
             C.translate(0, 2 * f);
             C.scale(1 - (0.9 * f), 1 - (0.9 * f));
-            C.lineWidth = 0.125 + (0.375 * f);
+            C.lineWidth = (2 / CS) + (0.375 * f);
         }
         const TZ = Math.floor(num / 100);
         for (let z = 0; z < TZ - 1; z++) {
@@ -56,7 +63,7 @@ function drawFrame(step = 1000, showPrev) {
                     }
                     if (showPrev && num <= 100 && x === 1 && y === 1) {
                         C.save();
-                            C.translate(0, 2);
+                            C.translate(0, 1.8);
                             C.scale(0.1, 0.1);
                             C.lineWidth = 0.5;
                             drawFrame();
@@ -97,8 +104,9 @@ function drawCube(x, y, z, nofill) {
     C.restore();
 }
 
-function updateInput(num) {
-    window.requestAnimationFrame(() => updateNum(num));
+function updateInput(inp) {
+    inp.style.setProperty('--value', (100 * inp.value / inp.max) + '%' )
+    window.requestAnimationFrame(() => updateNum(inp.value));
 }
 
 function updateNum(num) {
@@ -251,5 +259,6 @@ function animate() {
 }
 
 let tarFr = curFr = 2;
-updateInput(curFr);
+INP.value = curFr;
+updateInput(INP);
 animate();
